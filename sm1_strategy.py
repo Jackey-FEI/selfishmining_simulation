@@ -1,4 +1,3 @@
-# first strategy by using Sirer Aritcla published in 2014
 import sys
 
 import random 
@@ -29,7 +28,7 @@ class SelfishMining:
     @alpha.setter
     def alpha(self, value):
         if value < 0 or value > 1:
-            raise ValueError('alpha should be between 0 and 1')
+            raise ValueError('alpha value should be between 0 and 1')
         self._alpha = value
         return
 
@@ -40,7 +39,7 @@ class SelfishMining:
     @gamma.setter
     def gamma(self, value):
         if value < 0 or value > 1:
-            raise ValueError('gamma should be between 0 and 1')
+            raise ValueError('gamma value should be between 0 and 1')
         self._gamma = value
         return
 
@@ -51,7 +50,6 @@ class SelfishMining:
         return
 
     def start_simulate(self, iteration):
-        # TODO: Implement the simulation, and calculate the revenue after the simulation
         # When the random number is less than alpha, 
         # the selfish miner will mine a block, otherwise the honest miner will mine a block
         self.iteration = iteration
@@ -100,6 +98,7 @@ class SelfishMining:
             self.private_chain_length = 0
             self.public_chain_length = 0
         elif self.delta == 0:
+            # honest miner is keeping the lead
             self.honest_mining_block += 1
             self.private_chain_length = 0
             self.public_chain_length = 0
