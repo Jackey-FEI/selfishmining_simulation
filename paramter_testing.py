@@ -12,10 +12,11 @@ def show_results(results, alphas, gammas):
     plt.ylabel("Revenue")
     plt.legend()
     plt.show()
+    plt.savefig('simulation.png')
 
 
 if __name__ == '__main__':
-    selfish_mining = SelfishMining(False)
+    selfish_mining = SelfishMining()
     iters = 100000
     results = np.zeros((10,10))
     gammas = [i/10 for i in range(0,10)]
@@ -26,6 +27,6 @@ if __name__ == '__main__':
             selfish_mining.gamma = gammas[i]
             selfish_mining.start_simulate(iters)
             results[i][j] = selfish_mining.selfish_mining_revenue
-
+            selfish_mining.reset()
     show_results(results, alphas, gammas)
     

@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.abspath(
 
 
 class SelfishMining:
-    def __init__(self, show_log=False):
+    def __init__(self):
         random.seed(None)
         self._alpha = 0
         self._gamma = 0
@@ -120,4 +120,15 @@ class SelfishMining:
 
         return
 
+    def reset(self):
+        random.seed(None)
+        self._alpha = 0
+        self._gamma = 0
+        self.selfish_mining_revenue = 0
+        self.public_chain_length = 0
+        self.private_chain_length = 0
+        self.selfish_mining_block = 0
+        self.honest_mining_block = 0
+        self.selfish_naive_mining_block = 0 # caculate the block number if seflish miner honestly mining
+        self.delta = 0 # same as state delta which is the difference between the private and public chain length
  
