@@ -58,10 +58,10 @@ class SelfishMining:
         total_gamma = sum(gammas)
         probabilities = [gammas[i] / total_gamma for i in range(len(gammas))]
         accum_probabilities = []
-        sum = 0
+        prob_sum = 0
         for prob in probabilities:
-            sum += prob
-            accum_probabilities.append(sum)
+            prob_sum += prob
+            accum_probabilities.append(prob_sum)
         rand = random.uniform(0, 1)
         for i, prob in enumerate(accum_probabilities):
             if rand <= prob:
@@ -131,7 +131,7 @@ class SelfishMining:
         elif max_delta == 0:
             for i in candidates:
                 gammas.append(self._gammas[i])
-            gammas.append(self.honest_gamma)
+            gammas.append(1-sum(gammas))
             index = self.select_candidate_gamma(gammas) # index in the candidates
             if index == (len(gammas)-1):
                 self.honest_mining_block+=2
