@@ -87,7 +87,7 @@ class SelfishMining:
                 candidates = [i]
             elif self.private_chain_length[i] == max_private_chain:
                 candidates.append(i)
-        if max_private_chain >=1 :
+        if max_private_chain >=2 :
             gammas = []
             for i in candidates:
                 gammas.append(self._gammas[i])
@@ -102,7 +102,7 @@ class SelfishMining:
         # may need to update the public chain length
         delta = self.private_chain_length[selfish_index] - self.public_chain_length
         self.private_chain_length[selfish_index] += 1
-        if delta == 0 and self.private_chain_length == 2: # TODO what if private chain leangth > 2, should we adopt this strategy
+        if delta == 0 and self.private_chain_length[selfish_index] == 2: # TODO what if private chain leangth > 2, should we adopt this strategy
             self.selfish_mining_block[selfish_index] +=  self.private_chain_length[selfish_index] 
             self.private_chain_length = [0 for _ in range(self.num_selfish)]
             self.public_chain_length = 0 # only one public chain (longest chain)

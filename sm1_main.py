@@ -10,7 +10,7 @@ selfish_mining.start_simulate(iteration_number)
 
 
 selfish_mining = SelfishMining(1)
-selfish_mining.set_alphas([0.3])
-selfish_mining.set_gammas([0.1])
+selfish_mining.set_alphas([0.4])
+selfish_mining.set_gammas([0.33])
 
 selfish_mining.start_simulate(iteration_number)
