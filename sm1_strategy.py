@@ -74,7 +74,7 @@ class SelfishMining:
         for i in range(iteration):
             rand_index = self.random_pick()
             if rand_index<self.num_selfish:
-                self.selfish_mining(rand_index)
+                self.selfish_mining_2(rand_index)
                 self.selfish_naive_mining_block[rand_index] += 1
             else:
                 self.honest_mining()
@@ -106,6 +106,36 @@ class SelfishMining:
             self.selfish_mining_block[selfish_index] +=  self.private_chain_length[selfish_index] 
             self.private_chain_length = [0 for _ in range(self.num_selfish)]
             self.public_chain_length = 0 # only one public chain (longest chain)
+        return
+    
+    def selfish_mining_2(self, selfish_index):
+        # mine a block and increase the private chain length
+        # may need to update the public chain length
+        # another strategy for selfish mining
+        # when the selfish miner is going to publish one block,
+        # other selfish miner will check and if they have a longer private chain, they will publish their private chain
+        # if same length, they compete to publish their private chain with a probability of gamma
+        delta = self.private_chain_length[selfish_index] - self.public_chain_length
+        self.private_chain_length[selfish_index] += 1
+        if delta == 0 and self.private_chain_length[selfish_index] == 2: # TODO what if private chain leangth > 2, should we adopt this strategy
+            max_selfish_chain = self.private_chain_length[selfish_index]
+            max_selfish_index = [selfish_index]
+            for i in range(self.num_selfish):
+                if self.private_chain_length[i] > max_selfish_chain:
+                    max_selfish_chain = self.private_chain_length[i]
+                    max_selfish_index = [i]
+                elif self.private_chain_length[i] == max_selfish_chain:
+                    max_selfish_index.append(i)
+            if len(max_selfish_index) > 1:
+                gammas = []
+                for i in max_selfish_index:
+                    gammas.append(self._gammas[i])
+                index = self.select_candidate_gamma(gammas) # index in the candidates
+                self.selfish_mining_block[max_selfish_index[index]]+=self.private_chain_length[max_selfish_index[index]]
+            else:
+                self.selfish_mining_block[max_selfish_index[0]]+=self.private_chain_length[max_selfish_index[0]]
+            self.private_chain_length = [0 for _ in range(self.num_selfish)]
+            self.public_chain_length = 0
         return
 
     def honest_mining(self):
