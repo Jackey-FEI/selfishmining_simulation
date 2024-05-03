@@ -161,7 +161,7 @@ class SelfishMining:
         elif max_delta == 0:
             for i in candidates:
                 gammas.append(self._gammas[i])
-            gammas.append(1-sum(gammas))
+            gammas.append(0.5)
             index = self.select_candidate_gamma(gammas) # index in the candidates
             if index == (len(gammas)-1):
                 self.honest_mining_block+=2
