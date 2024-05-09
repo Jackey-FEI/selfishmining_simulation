@@ -60,6 +60,7 @@ class SelfishMining:
                 self.selfish_naive_mining_block += 1
             else:
                 self.honest_mining()
+        print(self.private_chain_length)
         if self.private_chain_length >=2 :
             self.selfish_mining_block += self.private_chain_length
 
